@@ -69,16 +69,23 @@ public class AppointmentsBooking extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if (counter == 0) {
+            // Inflate the layout for this fragment
+            return inflater.inflate(R.layout.fragment_appointments_booking, container, false);
 
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_appointments_booking, container, false);
+        }
+        else {
+            return inflater.inflate(R.layout.fragment_current_appointments, container, false);
+        }
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TextView textViewCounter = view.findViewById(R.id.appBooking_tv);
-        textViewCounter.setText("Fragment No " + counter);
+
+//        TextView textViewCounter = view.findViewById(R.id.appBooking_tv);
+//        textViewCounter.setText("Fragment No " + counter);
     }
 }
