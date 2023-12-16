@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AppointmentsBookingFragment">
+    tools:context=".AppointmentsFragments">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -48,7 +48,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <RadioGroup
-            android:id="@+id/radioGroup2"
+            android:id="@+id/radioGroupDuration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -85,7 +85,7 @@
 
             android:text="Available Appointments"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroup2" />
+            app:layout_constraintTop_toBottomOf="@+id/radioGroupDuration" />
 
         <GridView
             android:id="@+id/gridView"
@@ -94,11 +94,21 @@
             android:layout_marginTop="24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewGridTitle"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/bookButton"
             android:gravity="center"
             android:horizontalSpacing="1dp"
             android:numColumns="2"
             android:verticalSpacing="1dp" />
+
+        <Button
+            android:id="@+id/bookButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gridView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Book Now!" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

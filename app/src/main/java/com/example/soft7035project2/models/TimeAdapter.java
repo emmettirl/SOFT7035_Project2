@@ -71,7 +71,7 @@ public class TimeAdapter extends BaseAdapter {
         return gridItem;
     }
 
-    private boolean isTimeSlotBooked(String timeSlot) {
+    private boolean isTimeSlotBooked(String timeSlot) { //todo currently ignores date
         String[] parts = timeSlot.split(" - ");
 
         String startTimeStr = formatShortTimes(parts[0]);
@@ -108,6 +108,14 @@ public class TimeAdapter extends BaseAdapter {
         selectedPosition = position;
         notifyDataSetChanged(); // Refresh the grid views
     }
+    public String getSelectedTime() {
+        if (selectedPosition >= 0) {
+            return formatShortTimes(times[selectedPosition].split(" - ")[0]);
+        } else {
+            return null;
+        }
+    }
+
 
 
 

@@ -9,9 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,20 +31,24 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 
-public class AppointmentsBookingFragment extends Fragment {
-    private static final String TAG = AppointmentsBookingFragment.class.getSimpleName();
+public class AppointmentsFragments extends Fragment {
+    private static final String TAG = AppointmentsFragments.class.getSimpleName();
     private Integer counter;
     private static final String ARG_COUNT = "param1";
     private EditText editTextDate;
     private ArrayList<Appointment> appointments;
+    private String selectedDate;
+    private String selectedDuration;
+    private String selectedStartTime;
+    Button confirmButton;
 
 
-    public AppointmentsBookingFragment() {
+    public AppointmentsFragments() {
         // Required empty public constructor
     }
 
-    public static AppointmentsBookingFragment newInstance(Integer counter) {
-        AppointmentsBookingFragment fragment = new AppointmentsBookingFragment();
+    public static AppointmentsFragments newInstance(Integer counter) {
+        AppointmentsFragments fragment = new AppointmentsFragments();
         Bundle args = new Bundle();
         args.putInt(ARG_COUNT, counter);
         fragment.setArguments(args);
@@ -83,6 +90,7 @@ public class AppointmentsBookingFragment extends Fragment {
         Log.d(TAG, "onViewCreated: pre super");
         super.onViewCreated(view, savedInstanceState);
 
+
         Log.d(TAG, "onViewCreated: pre context");
 //        Context context = requireContext();
         Context context = getContext();
@@ -97,11 +105,9 @@ public class AppointmentsBookingFragment extends Fragment {
             appointments = bookingDBHelper.getAllAppointments(db);
             AppointmentAdapter adapter = new AppointmentAdapter(appointments, getContext());
 
+
             if (counter == 0) {
                 Log.d(TAG, "onViewCreated: booking");
-
-
-
 
                 editTextDate = view.findViewById(R.id.editTextDate);
                 editTextDate.setOnClickListener(new View.OnClickListener() {
@@ -118,8 +124,40 @@ public class AppointmentsBookingFragment extends Fragment {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         timeAdapter.setSelectedPosition(position);
+                        selectedStartTime = timeAdapter.getSelectedTime();
                     }
                 });
+
+                Log.d(TAG, "onViewCreated: bookingDB created ");
+
+
+
+                RadioGroup radioGroupDuration = view.findViewById(R.id.radioGroupDuration);
+                Log.d(TAG, "onViewCreated: radioGroupDuration found");
+                radioGroupDuration.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        Log.d(TAG, "onCheckedChanged: radioGroupDuration changed" + checkedId );
+                        RadioButton selectedRadioButton = group.findViewById(checkedId);
+                        if (selectedRadioButton != null) {
+
+                            selectedDuration = (selectedRadioButton.getText().toString().split(" ")[0] + ":00");
+                        }
+                    }
+                });
+
+                confirmButton = view.findViewById(R.id.bookButton);
+                confirmButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Appointment appointment = new Appointment("John Doe", selectedDate, selectedStartTime, selectedDuration);
+                        Log.d(TAG, "onClick: " + appointment.toString());
+
+                        bookingDBHelper.insertAppointment(appointment);
+                    }
+                });
+
+
 
             } else {
                 Log.d(TAG, "onViewCreated: current");
@@ -129,7 +167,6 @@ public class AppointmentsBookingFragment extends Fragment {
                 recyclerView.setAdapter(adapter);
             }
 
-            Log.d(TAG, "onViewCreated: bookingDB created ");
         } catch (Exception e) {
             Log.d(TAG, "onViewCreated: ", e);
         }
@@ -148,7 +185,8 @@ public class AppointmentsBookingFragment extends Fragment {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         // Set the date chosen by the user
-                        editTextDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                        selectedDate = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+                        editTextDate.setText(selectedDate);
                     }
                 }, year, month, day);
         datePickerDialog.show();

@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.settings_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Tech Consultants");
+
 
         ImageButton toolbarButton = findViewById(R.id.settings_toolbar_button);
         toolbarButton.setOnClickListener(new View.OnClickListener() {

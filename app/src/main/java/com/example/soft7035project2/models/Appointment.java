@@ -11,8 +11,14 @@ public class Appointment {
 
 
     public Appointment() {
-        this.id = id;
         this.user = user;
+        this.time = time;
+        this.duration = duration;
+    }
+
+    public Appointment(String user, String date, String time, String duration) {
+        this.user = user;
+        this.date = date;
         this.time = time;
         this.duration = duration;
     }
@@ -59,7 +65,6 @@ public class Appointment {
 
     public String toString() {
         return "Appointment{" +
-                "id=" + id +
                 ", user='" + user + '\'' +
                 ", date='" + date + '\'' +
                 ", time='" + time + '\'' +

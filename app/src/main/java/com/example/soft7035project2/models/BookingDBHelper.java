@@ -104,4 +104,38 @@ public class BookingDBHelper extends SQLiteOpenHelper {
         cursor.close();
         return appointments;
     }
+
+    public boolean deleteAppointmentById(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Define the where clause
+        String selection = COLUMN_ID + " = ?";
+
+        // Specify arguments in placeholder order
+        String[] selectionArgs = { String.valueOf(id) };
+
+        // Perform the deletion
+        int deletedRows = db.delete(TABLE_NAME, selection, selectionArgs);
+
+        db.close();
+
+        // Check if any rows were deleted
+        return deletedRows > 0;
+    }
+
+    public boolean insertAppointment(Appointment appointment) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USER, appointment.getUser());
+        values.put(COLUMN_DATE, appointment.getDate());
+        values.put(COLUMN_TIME, appointment.getTime());
+        values.put(COLUMN_DURATION, appointment.getDuration());
+        long newRowId = db.insert(TABLE_NAME, null, values);
+
+        db.close();
+
+        return newRowId != -1;
+    }
+
 }

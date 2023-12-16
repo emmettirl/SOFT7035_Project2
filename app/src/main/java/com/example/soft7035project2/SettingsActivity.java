@@ -77,6 +77,9 @@ public class SettingsActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.settings_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Tech Consultants");
+
+
         Button toolbarButton = findViewById(R.id.settings_toolbar_button);
         toolbarButton.setOnClickListener(new View.OnClickListener() {
             @Override
