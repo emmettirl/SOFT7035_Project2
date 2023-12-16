@@ -1,5 +1,6 @@
 package com.example.soft7035project2;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -8,17 +9,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.TextView;
+
+import android.app.DatePickerDialog;
+import android.widget.DatePicker;
+import android.widget.EditText;
+
+import java.util.Calendar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.soft7035project2.models.Appointment;
 import com.example.soft7035project2.models.BookingDBHelper;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.soft7035project2.models.TimeAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +39,7 @@ public class AppointmentsBooking extends Fragment {
 
     private Integer counter;
     private static final String ARG_COUNT = "param1";
+    private EditText editTextDate;
 
     public AppointmentsBooking() {
         // Required empty public constructor
@@ -68,6 +76,8 @@ public class AppointmentsBooking extends Fragment {
         if (getArguments() != null) {
             counter = getArguments().getInt(ARG_COUNT);
         }
+
+
     }
 
     @Override
@@ -78,7 +88,7 @@ public class AppointmentsBooking extends Fragment {
             return inflater.inflate(R.layout.fragment_appointments_booking, container, false);
         }
         else {
-            return inflater.inflate(R.layout.fragment_current_appointments, container, false);
+            return inflater.inflate(R.layout.fragment_appointments_current, container, false);
         }
 
     }
@@ -110,15 +120,44 @@ public class AppointmentsBooking extends Fragment {
                 }
             );
 
-
-
             Log.d(TAG, "onViewCreated: bookingDB created ");
         } catch (Exception e) {
             Log.d(TAG, "onViewCreated: ", e);
         }
 
+        editTextDate = view.findViewById(R.id.editTextDate);
+        editTextDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog();
+            }
+        });
+
+
+        GridView gridView = view.findViewById(R.id.gridView);
+        TimeAdapter timeAdapter = new TimeAdapter(getContext());
+        gridView.setAdapter(timeAdapter);
 
 
 
+    }
+
+    private void showDatePickerDialog() {
+        // Get Current Date
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+
+        // Launch Date Picker Dialog
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        // Set the date chosen by the user
+                        editTextDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                    }
+                }, year, month, day);
+        datePickerDialog.show();
     }
 }
