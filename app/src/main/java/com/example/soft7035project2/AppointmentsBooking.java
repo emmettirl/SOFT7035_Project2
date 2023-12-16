@@ -14,59 +14,41 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 
-import android.app.DatePickerDialog;
-import android.widget.DatePicker;
-import android.widget.EditText;
-
-import java.util.Calendar;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.soft7035project2.models.Appointment;
+import com.example.soft7035project2.models.AppointmentAdapter;
 import com.example.soft7035project2.models.BookingDBHelper;
 import com.example.soft7035project2.models.TimeAdapter;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AppointmentsBooking#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.Calendar;
+
+
 public class AppointmentsBooking extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
     private static final String TAG = AppointmentsBooking.class.getSimpleName();
-
     private Integer counter;
     private static final String ARG_COUNT = "param1";
     private EditText editTextDate;
+    private ArrayList<Appointment> appointments;
+    Button testButton;
+    TextView testText;
 
     public AppointmentsBooking() {
         // Required empty public constructor
     }
-
-    Button testButton;
-    TextView testText;
 
     public static AppointmentsBooking newInstance(Integer counter) {
         AppointmentsBooking fragment = new AppointmentsBooking();
         Bundle args = new Bundle();
         args.putInt(ARG_COUNT, counter);
         fragment.setArguments(args);
-        return fragment;
-    }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment AppointmentsBooking.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AppointmentsBooking newInstance() {
-        AppointmentsBooking fragment = new AppointmentsBooking();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
+        Log.d(TAG, "newInstance: " + counter.toString() + " created");
         return fragment;
     }
 
@@ -75,8 +57,11 @@ public class AppointmentsBooking extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             counter = getArguments().getInt(ARG_COUNT);
+            Log.d(TAG, "onCreate: " + counter.toString() + " created");
         }
-
+        else {
+            Log.d(TAG, "onCreate: no arguments ");
+        }
 
     }
 
@@ -85,9 +70,11 @@ public class AppointmentsBooking extends Fragment {
                              Bundle savedInstanceState) {
         if (counter == 0) {
             // Inflate the layout for this fragment
+            Log.d(TAG, "onCreateView: booking");
             return inflater.inflate(R.layout.fragment_appointments_booking, container, false);
         }
         else {
+            Log.d(TAG, "onCreateView: current");
             return inflater.inflate(R.layout.fragment_appointments_current, container, false);
         }
 
@@ -95,10 +82,12 @@ public class AppointmentsBooking extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onViewCreated: pre super");
         super.onViewCreated(view, savedInstanceState);
 
-        Context context = this.getContext();
-
+        Log.d(TAG, "onViewCreated: pre context");
+//        Context context = requireContext();
+        Context context = getContext();
         try {
             Log.d(TAG, "onViewCreated: bookingDB about to be created");
             BookingDBHelper bookingDBHelper = new BookingDBHelper(context);
@@ -112,34 +101,44 @@ public class AppointmentsBooking extends Fragment {
             testButton = view.findViewById(R.id.testbutton);
             testText = view.findViewById(R.id.textTextView);
 
-            testButton.setOnClickListener(new View.OnClickListener() {
+            appointments = bookingDBHelper.getAllAppointments(db);
+            AppointmentAdapter adapter = new AppointmentAdapter(appointments, getContext());
+
+            if (counter == 0) {
+                Log.d(TAG, "onViewCreated: booking");
+
+                testButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        testText.setText(bookingDBHelper.getAllAppointments(db).toString());
+                        appointments = bookingDBHelper.getAllAppointments(db);
+                        testText.setText(appointments.toString());
                     }
-                }
-            );
+                });
+
+                editTextDate = view.findViewById(R.id.editTextDate);
+                editTextDate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDatePickerDialog();
+                    }
+                });
+
+                GridView gridView = view.findViewById(R.id.gridView);
+                TimeAdapter timeAdapter = new TimeAdapter(getContext());
+                gridView.setAdapter(timeAdapter);
+
+            } else {
+                Log.d(TAG, "onViewCreated: current");
+
+                RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerView.setAdapter(adapter);
+            }
 
             Log.d(TAG, "onViewCreated: bookingDB created ");
         } catch (Exception e) {
             Log.d(TAG, "onViewCreated: ", e);
         }
-
-        editTextDate = view.findViewById(R.id.editTextDate);
-        editTextDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog();
-            }
-        });
-
-
-        GridView gridView = view.findViewById(R.id.gridView);
-        TimeAdapter timeAdapter = new TimeAdapter(getContext());
-        gridView.setAdapter(timeAdapter);
-
-
-
     }
 
     private void showDatePickerDialog() {
