@@ -53,6 +53,8 @@ public class TimeAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.grid_item, null);
         }
 
+        TextView textView = convertView.findViewById(R.id.grid_item_label);
+        textView.setText(times[position]);
         if (isTimeSlotBooked(times[position])) {
             convertView.setBackgroundColor(Color.GRAY); // Booked slot
         } else {

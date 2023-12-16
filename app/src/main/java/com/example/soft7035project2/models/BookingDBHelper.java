@@ -67,7 +67,7 @@ public class BookingDBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_USER, "John Doe");
         values.put(COLUMN_DATE, "01-12-2023");
-        values.put(COLUMN_TIME, "10:00:00");
+        values.put(COLUMN_TIME, "10:00");
         values.put(COLUMN_DURATION, "30");
 
         long newRowId = db.insert(TABLE_NAME, null, values);
