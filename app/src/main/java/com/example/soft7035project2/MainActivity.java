@@ -1,10 +1,16 @@
 package com.example.soft7035project2;
 
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.viewpager2.widget.ViewPager2;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.soft7035project2.models.ViewPageAdapter;
 import com.google.android.material.tabs.TabLayout;
@@ -40,5 +46,27 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }).attach();
+
+        Toolbar toolbar = findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
+
+        Button toolbarButton = findViewById(R.id.main_toolbar_button);
+        toolbarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popup = new PopupMenu(MainActivity.this, toolbarButton);
+                popup.getMenuInflater().inflate(R.menu.main_menu, popup.getMenu());
+
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                });
+                popup.show();
+
+            }
+        });
+
     }
 }
