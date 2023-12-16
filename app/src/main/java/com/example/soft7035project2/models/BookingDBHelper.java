@@ -107,19 +107,10 @@ public class BookingDBHelper extends SQLiteOpenHelper {
 
     public boolean deleteAppointmentById(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-
-        // Define the where clause
         String selection = COLUMN_ID + " = ?";
-
-        // Specify arguments in placeholder order
         String[] selectionArgs = { String.valueOf(id) };
-
-        // Perform the deletion
         int deletedRows = db.delete(TABLE_NAME, selection, selectionArgs);
-
         db.close();
-
-        // Check if any rows were deleted
         return deletedRows > 0;
     }
 
