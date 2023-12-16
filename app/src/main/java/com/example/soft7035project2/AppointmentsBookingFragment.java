@@ -8,11 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,20 +28,20 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 
-public class AppointmentsBooking extends Fragment {
-    private static final String TAG = AppointmentsBooking.class.getSimpleName();
+public class AppointmentsBookingFragment extends Fragment {
+    private static final String TAG = AppointmentsBookingFragment.class.getSimpleName();
     private Integer counter;
     private static final String ARG_COUNT = "param1";
     private EditText editTextDate;
     private ArrayList<Appointment> appointments;
 
 
-    public AppointmentsBooking() {
+    public AppointmentsBookingFragment() {
         // Required empty public constructor
     }
 
-    public static AppointmentsBooking newInstance(Integer counter) {
-        AppointmentsBooking fragment = new AppointmentsBooking();
+    public static AppointmentsBookingFragment newInstance(Integer counter) {
+        AppointmentsBookingFragment fragment = new AppointmentsBookingFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COUNT, counter);
         fragment.setArguments(args);
@@ -115,6 +114,12 @@ public class AppointmentsBooking extends Fragment {
                 GridView gridView = view.findViewById(R.id.gridView);
                 TimeAdapter timeAdapter = new TimeAdapter(getContext(), appointments);
                 gridView.setAdapter(timeAdapter);
+                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        timeAdapter.setSelectedPosition(position);
+                    }
+                });
 
             } else {
                 Log.d(TAG, "onViewCreated: current");

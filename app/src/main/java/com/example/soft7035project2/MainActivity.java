@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.settings_toolbar);
         setSupportActionBar(toolbar);
 
-        Button toolbarButton = findViewById(R.id.settings_toolbar_button);
+        ImageButton toolbarButton = findViewById(R.id.settings_toolbar_button);
         toolbarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

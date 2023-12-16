@@ -17,14 +17,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         >
-        <Button
+
+        <ImageButton
             android:id="@+id/settings_toolbar_button"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
-            android:text="My Button"
             android:layout_gravity="end"
-            android:icon="@drawable/ic_launcher_background"
-            />
+            android:src="@mipmap/homemade_burger_foreground"
+            android:background="@android:color/transparent"
+            tools:layout_editor_absoluteX="347dp" />
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.viewpager2.widget.ViewPager2

@@ -1,10 +1,12 @@
 package com.example.soft7035project2.models;
 
 public class Appointment {
+    private static final String TAG = Appointment.class.getSimpleName();
 
     private int id;
     private String user;
     private String time;
+    private String date;
     private String duration;
 
 
@@ -31,6 +33,14 @@ public class Appointment {
         this.user = user;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public String getTime() {
         return time;
     }
@@ -51,6 +61,7 @@ public class Appointment {
         return "Appointment{" +
                 "id=" + id +
                 ", user='" + user + '\'' +
+                ", date='" + date + '\'' +
                 ", time='" + time + '\'' +
                 ", duration='" + duration + '\'' +
                 '}';

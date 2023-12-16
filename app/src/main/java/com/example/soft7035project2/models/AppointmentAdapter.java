@@ -11,7 +11,7 @@ import com.example.soft7035project2.R;
 
 
 public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.ViewHolder> {
-
+    private static final String TAG = AppointmentAdapter.class.getSimpleName();
     private ArrayList<Appointment> appointments;
 
     public AppointmentAdapter(ArrayList<Appointment> appointments, Context context) {

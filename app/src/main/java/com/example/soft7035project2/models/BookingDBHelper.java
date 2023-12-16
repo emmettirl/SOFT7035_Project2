@@ -10,7 +10,6 @@ import android.util.Log;
 import java.util.ArrayList;
 
 public class BookingDBHelper extends SQLiteOpenHelper {
-
     private static final String TAG = BookingDBHelper.class.getSimpleName();
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "bookings.db";
@@ -68,7 +67,7 @@ public class BookingDBHelper extends SQLiteOpenHelper {
         values.put(COLUMN_USER, "John Doe");
         values.put(COLUMN_DATE, "01-12-2023");
         values.put(COLUMN_TIME, "10:00");
-        values.put(COLUMN_DURATION, "30");
+        values.put(COLUMN_DURATION, "01:30");
 
         long newRowId = db.insert(TABLE_NAME, null, values);
 

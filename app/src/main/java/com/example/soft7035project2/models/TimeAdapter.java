@@ -6,14 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
+
 import com.example.soft7035project2.R;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 
 public class TimeAdapter extends BaseAdapter {
+    private static final String TAG = TimeAdapter.class.getSimpleName();
+    private int selectedPosition = -1;
     private Context context;
     private final String[] times;
     private ArrayList<Appointment> appointments;
@@ -46,32 +49,67 @@ public class TimeAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View gridItem, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.grid_item, null);
+        if (gridItem == null) {
+            gridItem = inflater.inflate(R.layout.grid_item, null);
         }
 
-        TextView textView = convertView.findViewById(R.id.grid_item_label);
+        TextView textView = gridItem.findViewById(R.id.grid_item_label);
         textView.setText(times[position]);
         if (isTimeSlotBooked(times[position])) {
-            convertView.setBackgroundColor(Color.GRAY); // Booked slot
+            gridItem.setBackgroundColor(Color.GRAY);
+            gridItem.setTag("booked");
+        } else if (selectedPosition == position) {
+            gridItem.setBackgroundColor(Color.BLUE);
         } else {
-            convertView.setBackgroundColor(Color.WHITE); // Unbooked slot
+            gridItem.setBackgroundColor(Color.WHITE);
+            gridItem.setTag("open"); /// TODO: 16/12/2023 will use this to check if adjacent slots are open for longer meeting durations
         }
 
-        return convertView;
+        return gridItem;
     }
 
     private boolean isTimeSlotBooked(String timeSlot) {
+        String[] parts = timeSlot.split(" - ");
+
+        String startTimeStr = formatShortTimes(parts[0]);
+        String endTimeStr = formatShortTimes(parts[1]);
+
+        LocalTime startTime = LocalTime.parse(startTimeStr);
+        LocalTime endTime = LocalTime.parse(endTimeStr);
+
         for (Appointment appointment : appointments) {
-            if (timeSlot.equals(appointment.getTime())) {
+            LocalTime appointmentStartTime = LocalTime.parse(appointment.getTime());
+            LocalTime duration = LocalTime.parse(formatShortTimes(appointment.getDuration()));
+            LocalTime appointmentEndTime = appointmentStartTime.plusHours(duration.getHour()).plusMinutes(duration.getMinute());
+
+            boolean startsInSlot = !appointmentStartTime.isBefore(startTime) && appointmentStartTime.isBefore(endTime);
+            boolean endsInSlot = appointmentEndTime.isAfter(startTime) && !appointmentEndTime.isAfter(endTime);
+            boolean overlapsSlot = appointmentStartTime.isBefore(startTime) && appointmentEndTime.isAfter(endTime);
+
+            if (startsInSlot || endsInSlot || overlapsSlot) {
                 return true;
             }
         }
         return false;
     }
+
+
+    private String formatShortTimes(String time) {
+        if (time.length() == 4) {
+            return "0" + time;
+        }
+        return time;
+    }
+
+    public void setSelectedPosition(int position) {
+        selectedPosition = position;
+        notifyDataSetChanged(); // Refresh the grid views
+    }
+
+
 
 }
 

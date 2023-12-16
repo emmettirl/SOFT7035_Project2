@@ -7,8 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.soft7035project2.AppointmentsBooking;
-import com.example.soft7035project2.MainActivity;
+import com.example.soft7035project2.AppointmentsBookingFragment;
 
 public class ViewPageAdapter extends FragmentStateAdapter {
     private static final String TAG = ViewPageAdapter.class.getSimpleName();
@@ -22,7 +21,7 @@ public class ViewPageAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         Log.d(TAG, "createFragment: " + position);
-        return AppointmentsBooking.newInstance(position);
+        return AppointmentsBookingFragment.newInstance(position);
     }
 
     @Override
