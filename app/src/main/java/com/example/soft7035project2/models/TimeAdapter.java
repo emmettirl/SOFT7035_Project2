@@ -1,20 +1,25 @@
 package com.example.soft7035project2.models;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import com.example.soft7035project2.R;
 
+import java.util.ArrayList;
 
 
 public class TimeAdapter extends BaseAdapter {
     private Context context;
     private final String[] times;
+    private ArrayList<Appointment> appointments;
 
-    public TimeAdapter(Context context) {
+    public TimeAdapter(Context context, ArrayList<Appointment> appointments) {
+        this.appointments = appointments;
         this.context = context;
         this.times = new String[22]; // 11 hours * 2 slots per hour
         int hour = 7;
@@ -48,9 +53,25 @@ public class TimeAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.grid_item, null);
         }
 
-        TextView textView = convertView.findViewById(R.id.grid_item_label);
-        textView.setText(times[position]);
+        if (isTimeSlotBooked(times[position])) {
+            convertView.setBackgroundColor(Color.GRAY); // Booked slot
+        } else {
+            convertView.setBackgroundColor(Color.WHITE); // Unbooked slot
+        }
+
         return convertView;
     }
+
+    private boolean isTimeSlotBooked(String timeSlot) {
+        for (Appointment appointment : appointments) {
+            if (timeSlot.equals(appointment.getTime())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
+
+
 

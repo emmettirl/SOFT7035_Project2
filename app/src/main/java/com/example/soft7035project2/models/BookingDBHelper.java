@@ -17,12 +17,9 @@ public class BookingDBHelper extends SQLiteOpenHelper {
     public static final  String TABLE_NAME = "appointments";
     public static final  String COLUMN_ID = "id";
     public static final  String COLUMN_USER = "user";
+    public static final  String COLUMN_DATE = "date";
     public static final  String COLUMN_TIME = "time";
     public static final  String COLUMN_DURATION = "duration";
-
-
-//    public static final String SQL_DELETE_TABLE =
-//        "DROP TABLE IF EXISTS " + TABLE_NAME;
 
 
     public BookingDBHelper(Context context) {
@@ -33,8 +30,6 @@ public class BookingDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         Log.d(TAG, "onCreate: db created");
         createTable(db);
-
-
     }
 
     @Override
@@ -49,16 +44,30 @@ public class BookingDBHelper extends SQLiteOpenHelper {
                 "CREATE TABLE " + TABLE_NAME + "("
                         + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                         + COLUMN_USER + " TEXT,"
+                        + COLUMN_DATE + " TEXT,"
                         + COLUMN_TIME + " TEXT,"
                         + COLUMN_DURATION + " TEXT"
                         + ")";
         db.execSQL(SQL_CREATE_TABLE);
     }
 
+    public void dropTable(SQLiteDatabase db){
+        String SQL_DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
+        db.execSQL(SQL_DROP_TABLE);
+    }
+
+    public void clearTable(SQLiteDatabase db){
+        String SQL_CLEAR_TABLE = "DELETE FROM " + TABLE_NAME;
+        db.execSQL(SQL_CLEAR_TABLE);
+    }
+
     public void insertDummyData(SQLiteDatabase db) {
+        createTable(db);
+
         ContentValues values = new ContentValues();
         values.put(COLUMN_USER, "John Doe");
-        values.put(COLUMN_TIME, "2023-12-01 10:00:00");
+        values.put(COLUMN_DATE, "01-12-2023");
+        values.put(COLUMN_TIME, "10:00:00");
         values.put(COLUMN_DURATION, "30");
 
         long newRowId = db.insert(TABLE_NAME, null, values);

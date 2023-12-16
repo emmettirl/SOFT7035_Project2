@@ -8,7 +8,7 @@
 
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/main_toolbar"
+        android:id="@+id/settings_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         >
         <Button
-            android:id="@+id/main_toolbar_button"
+            android:id="@+id/settings_toolbar_button"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
             android:text="My Button"
@@ -33,7 +33,7 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/mainActivity_tabLayout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/settings_toolbar" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/mainActivity_tabLayout"

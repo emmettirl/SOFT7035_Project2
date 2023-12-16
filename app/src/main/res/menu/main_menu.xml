@@ -2,13 +2,8 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/action_book"
-        android:title="Booking"
-        android:icon="@drawable/ic_launcher_background"
-        app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/action_appointments"
-        android:title="Appointments"
+        android:id="@+id/action_home"
+        android:title="Home"
         android:icon="@drawable/ic_launcher_background"
         app:showAsAction="ifRoom" />
     <item

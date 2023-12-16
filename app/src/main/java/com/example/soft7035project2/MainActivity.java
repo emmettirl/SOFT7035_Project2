@@ -1,10 +1,10 @@
 package com.example.soft7035project2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }).attach();
 
-        Toolbar toolbar = findViewById(R.id.main_toolbar);
+        Toolbar toolbar = findViewById(R.id.settings_toolbar);
         setSupportActionBar(toolbar);
 
-        Button toolbarButton = findViewById(R.id.main_toolbar_button);
+        Button toolbarButton = findViewById(R.id.settings_toolbar_button);
         toolbarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,12 +61,22 @@ public class MainActivity extends AppCompatActivity {
 
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
-                        Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+                        int id = item.getItemId();
+
+                        if (id == R.id.action_home) {
+                            // Intent for the Main Activity
+                            Intent mainIntent = new Intent(MainActivity.this, MainActivity.class);
+                            startActivity(mainIntent);
+                        } else if (id == R.id.action_about) {
+                            // Intent for the Settings Activity
+                            Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                            startActivity(settingsIntent);
+                        }
+
                         return true;
                     }
                 });
                 popup.show();
-
             }
         });
 

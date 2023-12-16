@@ -35,8 +35,7 @@ public class AppointmentsBooking extends Fragment {
     private static final String ARG_COUNT = "param1";
     private EditText editTextDate;
     private ArrayList<Appointment> appointments;
-    Button testButton;
-    TextView testText;
+
 
     public AppointmentsBooking() {
         // Required empty public constructor
@@ -94,12 +93,7 @@ public class AppointmentsBooking extends Fragment {
 
             SQLiteDatabase db = bookingDBHelper.getWritableDatabase();
 
-            bookingDBHelper.insertDummyData(db);
-
             Log.d(TAG, "onViewCreated:" + view.toString());
-
-            testButton = view.findViewById(R.id.testbutton);
-            testText = view.findViewById(R.id.textTextView);
 
             appointments = bookingDBHelper.getAllAppointments(db);
             AppointmentAdapter adapter = new AppointmentAdapter(appointments, getContext());
@@ -107,13 +101,8 @@ public class AppointmentsBooking extends Fragment {
             if (counter == 0) {
                 Log.d(TAG, "onViewCreated: booking");
 
-                testButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        appointments = bookingDBHelper.getAllAppointments(db);
-                        testText.setText(appointments.toString());
-                    }
-                });
+
+
 
                 editTextDate = view.findViewById(R.id.editTextDate);
                 editTextDate.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +113,7 @@ public class AppointmentsBooking extends Fragment {
                 });
 
                 GridView gridView = view.findViewById(R.id.gridView);
-                TimeAdapter timeAdapter = new TimeAdapter(getContext());
+                TimeAdapter timeAdapter = new TimeAdapter(getContext(), appointments);
                 gridView.setAdapter(timeAdapter);
 
             } else {
