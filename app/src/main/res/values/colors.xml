@@ -4,4 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00000000</color>
     <color name="lightgrey">#ADADAD</color>
+    <color name="primary">#178189</color>
+
 </resources>

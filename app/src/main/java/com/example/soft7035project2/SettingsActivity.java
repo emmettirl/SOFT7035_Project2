@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.soft7035project2.models.BookingDBHelper;
@@ -80,7 +81,7 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Tech Consultants");
 
 
-        Button toolbarButton = findViewById(R.id.settings_toolbar_button);
+        ImageButton toolbarButton = findViewById(R.id.settings_toolbar_button);
         toolbarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

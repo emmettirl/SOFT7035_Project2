@@ -11,20 +11,19 @@
         android:id="@+id/settings_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="@color/primary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
             android:id="@+id/settings_toolbar_button"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
             android:layout_gravity="end"
-            android:src="@mipmap/homemade_burger_foreground"
             android:background="@android:color/transparent"
+            android:src="@mipmap/homemade_burger_foreground"
             tools:layout_editor_absoluteX="347dp" />
     </androidx.appcompat.widget.Toolbar>
 

@@ -17,6 +17,16 @@ import com.example.soft7035project2.models.ViewPageAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+// Sadly there were a couple of items I wanted to work on, but I ran out of time.
+// todo: convert database model to service.
+// todo: Refresh grid view and recycler view when new appointment is added
+// todo: Update appointment
+// todo: greater theming
+// todo: use shared preferences to store user data
+// todo: gridview takes dates into account.
+// todo: check that duration requested is possible in gap between existing appointments
+// todo: when database is dropped, needs manual entry to work again.
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 

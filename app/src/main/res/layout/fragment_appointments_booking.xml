@@ -51,17 +51,21 @@
             android:id="@+id/radioGroupDuration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/primary"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.317"
             app:layout_constraintStart_toEndOf="@+id/textView5"
-            app:layout_constraintTop_toTopOf="@+id/textView5"
-            android:orientation="horizontal">
+            app:layout_constraintTop_toTopOf="@+id/textView5">
 
             <RadioButton
                 android:id="@+id/radio1hr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/_30_minutes" />
+                android:backgroundTint="@color/primary"
+                android:text="@string/_30_minutes"
+                android:textColorHighlight="@color/primary"
+                android:textColorLink="@color/primary" />
 
             <RadioButton
                 android:id="@+id/radio2hr"
@@ -104,11 +108,12 @@
             android:id="@+id/bookButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/primary"
+            android:text="Book Now!"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/gridView"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="Book Now!" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gridView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
